@@ -2,7 +2,7 @@
 set -e
 
 echo "Grabbing IPs..."
-PRIVATE_IP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
+PRIVATE_IP=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com)
 
 echo "Installing dependencies..."
 sudo apt-get -qq update &>/dev/null
