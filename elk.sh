@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/sudo bash
 set -e
 
 echo "Grabbing IPs..."
