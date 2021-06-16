@@ -16,9 +16,9 @@ filebeat.prospectors:
   paths:
     - "/tmp/app_log.txt"
 setup.kibana:
-  host: "http://kibana.service.consul:5601"
+  host: "PRIVATE_IP:5601"
 output.elasticsearch:
-  hosts: ["http://elk.service.consul:9200"]
+  hosts: ["PRIVATE_IP:9200"]
   index: "filebeat-$PRIVATE_IP-%%{+yyyy.MM.dd}"
 setup.template.name: "$PRIVATE_IP"
 setup.template.pattern: "$PRIVATE_IP-*-Pattern"
