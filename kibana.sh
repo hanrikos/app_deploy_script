@@ -9,6 +9,13 @@ sudo apt-get -qq update &>/dev/null
 sudo apt-get -yqq install unzip &>/dev/null
 sudo apt-get install dnsmasq
 
+sudo tee /tmp/kibana.yml > /dev/null <<"EOF"
+---
+server.name: kibana
+server.host: "0.0.0.0"
+elasticsearch.url: "http://elk.service.consul:9200"
+EOF
+
 echo "Installing Docker..."
 sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
