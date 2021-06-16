@@ -9,6 +9,21 @@ sudo apt-get -qq update &>/dev/null
 sudo apt-get -yqq install unzip &>/dev/null
 sudo apt-get install dnsmasq
 
+sudo tee /tmp/filebeat.yml > /dev/null <<EOF
+filebeat.prospectors:
+- type: log
+  enabled: true
+  paths:
+    - "/tmp/app_log.txt"
+setup.kibana:
+  host: "http://kibana.service.consul:5601"
+output.elasticsearch:
+  hosts: ["http://elk.service.consul:9200"]
+  index: "filebeat-$PRIVATE_IP-%%{+yyyy.MM.dd}"
+setup.template.name: "$PRIVATE_IP"
+setup.template.pattern: "$PRIVATE_IP-*-Pattern"
+EOF
+
 echo "Installing Docker..."
 sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
