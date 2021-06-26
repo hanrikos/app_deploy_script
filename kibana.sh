@@ -14,7 +14,7 @@ sudo tee /tmp/kibana.yml > /dev/null <<"EOF"
 ---
 server.name: kibana
 server.host: "0.0.0.0"
-elasticsearch.url: "PRIVATE_IP:9200"
+elasticsearch.url: "192.168.65.87:9200"
 EOF
 
 echo "Installing Docker..."
