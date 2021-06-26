@@ -2,7 +2,7 @@
 set -e
 
 echo "Grabbing IPs..."
-PRIVATE_IP=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com)
+PRIVATE_IP="192.168.65.87"
 
 echo "Installing dependencies..."
 sudo apt-get -qq update &>/dev/null
@@ -33,12 +33,9 @@ EOF
 sudo systemctl restart docker.service
 
 sudo systemctl daemon-reload
-sudo systemctl enable consul.service
-sudo systemctl start consul.service
 
 sudo systemctl restart docker.service
 systemctl daemon-reload
-systemctl start consul
 
 sudo docker pull docker.elastic.co/elasticsearch/elasticsearch:6.5.4
 sudo docker run -p 9300:9300 -p 9200:9200 -e "ES_JAVA_OPTS=-Xms512m -Xmx512m" -e "discovery.type=single-node" --restart=always docker.elastic.co/elasticsearch/elasticsearch:6.5.4
