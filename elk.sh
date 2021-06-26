@@ -2,7 +2,7 @@
 set -e
 
 echo "Grabbing IPs..."
-PRIVATE_IP="192.168.65.87"
+PRIVATE_IP="192.168.42.177"
 
 echo "Installing dependencies..."
 sudo apt-get -qq update &>/dev/null
@@ -17,18 +17,6 @@ sudo apt update
 sudo apt-cache policy docker-ce
 sudo apt-get install docker-ce -y
 
-sudo tee /etc/consul.d/elk.json > /dev/null <<EOF
-{"service": {
-    "name": "elk",
-    "tags": ["elk"],
-    "port": 9200,
-    "check": {
-        "http": "http://localhost:9200/_cluster/health",
-        "interval": "10s"
-        }
-    }
-}
-EOF
 
 sudo systemctl restart docker.service
 
