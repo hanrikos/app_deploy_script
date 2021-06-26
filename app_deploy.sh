@@ -16,10 +16,10 @@ filebeat.prospectors:
   paths:
     - "/tmp/app_log.txt"
 setup.kibana:
-  host: "PRIVATE_IP:5601"
+  host: "192.168.65.86:5601"
 output.elasticsearch:
   hosts: ["PRIVATE_IP:9200"]
-  index: "filebeat-$PRIVATE_IP-%%{+yyyy.MM.dd}"
+  index: "filebeat-$192.168.65.87-%%{+yyyy.MM.dd}"
 setup.template.name: "$PRIVATE_IP"
 setup.template.pattern: "$PRIVATE_IP-*-Pattern"
 EOF
@@ -36,8 +36,6 @@ sudo apt-get install docker-ce -y
 sudo systemctl restart docker.service
 
 sudo systemctl daemon-reload
-sudo systemctl enable consul.service
-sudo systemctl start consul.service
 
 sudo systemctl restart docker.service
 sudo docker pull hansmuller/midproject:latest
