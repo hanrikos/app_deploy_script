@@ -2,7 +2,7 @@
 set -e
 
 echo "Grabbing IPs..."
-PRIVATE_IP="192.168.65.88"
+PRIVATE_IP="192.168.42.178"
 
 echo "Installing dependencies..."
 sudo apt-get -qq update &>/dev/null
@@ -16,10 +16,10 @@ filebeat.prospectors:
   paths:
     - "/tmp/app_log.txt"
 setup.kibana:
-  host: "192.168.65.86:5601"
+  host: "192.168.42.176:5601"
 output.elasticsearch:
   hosts: ["PRIVATE_IP:9200"]
-  index: "filebeat-$192.168.65.87-%%{+yyyy.MM.dd}"
+  index: "filebeat-$192.168.42.177-%%{+yyyy.MM.dd}"
 setup.template.name: "$PRIVATE_IP"
 setup.template.pattern: "$PRIVATE_IP-*-Pattern"
 EOF
