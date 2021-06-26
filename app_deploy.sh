@@ -2,7 +2,7 @@
 set -e
 
 echo "Grabbing IPs..."
-PRIVATE_IP=$(dig TXT +short o-o.myaddr.l.google.com @ns1.google.com)
+PRIVATE_IP="192.168.65.88"
 
 echo "Installing dependencies..."
 sudo apt-get -qq update &>/dev/null
