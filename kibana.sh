@@ -3,7 +3,7 @@
 set -e
 
 echo "Grabbing IPs..."
-PRIVATE_IP="192.168.65.86"
+PRIVATE_IP="192.168.42.176"
 
 echo "Installing dependencies..."
 sudo apt-get -qq update &>/dev/null
@@ -14,7 +14,7 @@ sudo tee /tmp/kibana.yml > /dev/null <<"EOF"
 ---
 server.name: kibana
 server.host: "0.0.0.0"
-elasticsearch.url: "192.168.65.87:9200"
+elasticsearch.url: "192.168.42.177:9200"
 EOF
 
 echo "Installing Docker..."
