@@ -381,19 +381,6 @@ sudo tee /tmp/all.yml > /dev/null <<"EOF"
     folder: '/var/lib/grafana/dashboards'
 EOF
 
-sudo tee /etc/consul.d/grafana.json > /dev/null <<EOF
-{"service": {
-    "name": "grafana",
-    "tags": ["grafana"],
-    "port": 3000,
-    "check": {
-        "http": "http://localhost:3000",
-        "interval": "10s"
-        }
-    }
-}
-EOF
-
 sudo systemctl daemon-reload
 
 sudo systemctl restart docker.service
