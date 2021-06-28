@@ -29,7 +29,7 @@ datasources:
   type: prometheus
   access: proxy
   orgId: 1
-  url: http://PROMETHEUS_IP:9090
+  url: http://192.168.42.166:9090
   password:
   user:
   database:
