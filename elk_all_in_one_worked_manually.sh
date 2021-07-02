@@ -16,6 +16,8 @@ if [ $? -ne 0 ]
 fi
 
 # insert/update hosts entry
+# option 2
+# sed -i "/localhost4/ s/.*/0.0.0.0\tlocalhost localhost.localdomain localhost4 localhost4.localdomain4/g" /etc/hosts
 sudo sed -i "/localhost4/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
 dependency_check_deb() {
