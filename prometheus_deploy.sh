@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+echo $pass | su $user –c ‘ls /root’
+
 version="${VERSION:-1.0.1}"
 arch="${ARCH:-linux-amd64}"
 bin_dir="${BIN_DIR:-/usr/local/bin}"
