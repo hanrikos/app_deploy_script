@@ -3,7 +3,7 @@
 # get credentials from params
 
 
-echo $pass | exec su $user –c ‘ls /root’
+echo $pass | sudo -S ls /root
 
 runAsRoot="
 printf \"\nhey there\n\"
