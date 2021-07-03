@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
-echo $pass | su $user –c ‘ls /root’
+# get credentials from params
+#echo $pass | su $user –c ‘ls /root’
+
+runAsRoot="
+printf \"\nhey there\n\"
+printf \"\nhello world, I am root\n\" >> \"/home/parallels/rootWasHere.txt\"
+"
+exec su root -c "$runAsRoot"
 
 sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common wget
