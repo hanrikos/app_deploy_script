@@ -14,6 +14,6 @@ sudo sh -c "curl -L https://github.com/docker/compose/releases/download/${COMPOS
 sudo chmod +x /usr/local/bin/docker-compose
 sudo sh -c "curl -L https://raw.githubusercontent.com/docker/compose/${COMPOSE_VERSION}/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose"
 
-sudo git clone https://github.com/mrcoles/node-react-docker-compose.git /tmp/deploy
+sudo git clone https://github.com/hanrikos/node-react-docker-compose.git /tmp/deploy
 cd /tmp/deploy
 sudo docker-compose up
