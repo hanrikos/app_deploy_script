@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #echo $pass | su $user –c ‘ls /root’
 #echo $pass | sudo -S ls /root
@@ -6,37 +6,46 @@ echo $pass | sudo -S ls /root
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
-version="${VERSION:-1.0.1}"
-arch="${ARCH:-linux-amd64}"
-bin_dir="${BIN_DIR:-/usr/local/bin}"
+# Make prometheus user
+sudo adduser --no-create-home --disabled-login --shell /bin/false --gecos "Prometheus Monitoring User" prometheus
 
-wget "https://github.com/prometheus/node_exporter/releases/download/v$version/node_exporter-$version.$arch.tar.gz" \
-    -O /tmp/node_exporter.tar.gz
+# Make directories and dummy files necessary for prometheus
+sudo mkdir /etc/prometheus
+sudo mkdir /var/lib/prometheus
+sudo touch /etc/prometheus/prometheus.yml
+sudo touch /etc/prometheus/prometheus.rules.yml
 
-mkdir -p /tmp/node_exporter
+# Assign ownership of the files above to prometheus user
+sudo chown -R prometheus:prometheus /etc/prometheus
+sudo chown prometheus:prometheus /var/lib/prometheus
 
-cd /tmp || { echo "ERROR! No /tmp found.."; exit 1; }
+# Download prometheus and copy utilities to where they should be in the filesystem
+#VERSION=2.2.1
+VERSION=$(curl https://raw.githubusercontent.com/prometheus/prometheus/master/VERSION)
+wget https://github.com/prometheus/prometheus/releases/download/v${VERSION}/prometheus-${VERSION}.linux-amd64.tar.gz
+tar xvzf prometheus-${VERSION}.linux-amd64.tar.gz
 
-tar xfz /tmp/node_exporter.tar.gz -C /tmp/node_exporter || { echo "ERROR! Extracting the node_exporter tar"; exit 1; }
+sudo cp prometheus-${VERSION}.linux-amd64/prometheus /usr/local/bin/
+sudo cp prometheus-${VERSION}.linux-amd64/promtool /usr/local/bin/
+sudo cp -r prometheus-${VERSION}.linux-amd64/consoles /etc/prometheus
+sudo cp -r prometheus-${VERSION}.linux-amd64/console_libraries /etc/prometheus
 
-cp "/tmp/node_exporter/node_exporter-$version.$arch/node_exporter" "$bin_dir"
-chown root:staff "$bin_dir/node_exporter"
+# Assign the ownership of the tools above to prometheus user
+sudo chown -R prometheus:prometheus /etc/prometheus/consoles
+sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
+sudo chown prometheus:prometheus /usr/local/bin/prometheus
+sudo chown prometheus:prometheus /usr/local/bin/promtool
 
-cat <<EOF > /etc/systemd/system/node_exporter.service
-[Unit]
-Description=Prometheus node exporter
-After=local-fs.target network-online.target network.target
-Wants=local-fs.target network-online.target network.target
-[Service]
-Type=simple
-ExecStartPre=-/sbin/iptables -I INPUT 1 -p tcp --dport 9100 -s 127.0.0.1 -j ACCEPT
-ExecStartPre=-/sbin/iptables -I INPUT 3 -p tcp --dport 9100 -j DROP
-ExecStart=/usr/local/bin/node_exporter
-[Install]
-WantedBy=multi-user.target
-EOF
+# Populate configuration files
+cat ./prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.yml
+cat ./prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
+cat ./prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
 
-sudo systemctl enable node_exporter.service
-sudo systemctl start node_exporter.service
+# systemd
+sudo systemctl daemon-reload
+sudo systemctl enable prometheus
+sudo systemctl start prometheus
 
-echo "SUCCESS! Installation succeeded!"
+# Installation cleanup
+rm prometheus-${VERSION}.linux-amd64.tar.gz
+rm -rf prometheus-${VERSION}.linux-amd64
