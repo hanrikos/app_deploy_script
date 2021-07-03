@@ -36,10 +36,13 @@ sudo chown -R prometheus:prometheus /etc/prometheus/console_libraries
 sudo chown prometheus:prometheus /usr/local/bin/prometheus
 sudo chown prometheus:prometheus /usr/local/bin/promtool
 
+# Get yaml files externally
+sudo git clone https://github.com/hanrikos/app_deploy_script.git /tmp/deploy
+
 # Populate configuration files
-cat ./prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.yml
-cat ./prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
-cat ./prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
+cat /tmp/deploy/prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.yml
+cat /tmp/deploy/prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
+cat /tmp/deploy/prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
 
 # systemd
 sudo systemctl daemon-reload
