@@ -32,7 +32,7 @@ ExecStart=/usr/local/bin/node_exporter
 WantedBy=multi-user.target
 EOF
 
-systemctl enable node_exporter.service
-systemctl start node_exporter.service
+sudo systemctl enable node_exporter.service
+sudo systemctl start node_exporter.service
 
 echo "SUCCESS! Installation succeeded!"
