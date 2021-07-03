@@ -15,5 +15,5 @@ sudo chmod +x /usr/local/bin/docker-compose
 sudo sh -c "curl -L https://raw.githubusercontent.com/docker/compose/${COMPOSE_VERSION}/contrib/completion/bash/docker-compose > /etc/bash_completion.d/docker-compose"
 
 sudo git clone https://github.com/filipw01/wordpress-dockerized.git /tmp/deploy
-
+cd /tmp/deploy
 sudo docker-compose up
