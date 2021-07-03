@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # get credentials from params
 
@@ -7,22 +7,18 @@ echo $pass | sudo -S ls /root
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
-#runAsRoot="
-#printf \"\nhey there\n\"
-#printf \"\nhello world, I am root\n\" >> \"/home/parallels/rootWasHere.txt\"
-#"
-#exec su root -c "$runAsRoot"
 
-sudo apt-get install -y apt-transport-https
-sudo apt-get install -y software-properties-common wget
-wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
+# Download grafana
+wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.6.3_amd64.deb
 
-echo "deb https://packages.grafana.com/oss/deb stable main" | sudo tee -a /etc/apt/sources.list.d/grafana.list
-sudo apt-get update
-sudo apt-get install grafana
+# Install grafana
+sudo apt-get install -y adduser libfontconfig
+sudo dpkg -i grafana_4.6.3_amd64.deb
 
+# systemd
 sudo systemctl daemon-reload
+sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
-sudo systemctl status grafana-server
 
-sudo systemctl enable grafana-server.service
+# Installation cleanup
+rm grafana_4.6.3_amd64.deb
