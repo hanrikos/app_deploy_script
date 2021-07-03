@@ -114,8 +114,8 @@ firewall_elk_rpm() {
     sudo firewall-cmd --permanent --zone=public --add-port=5044/tcp
     sudo firewall-cmd --reload
     #Test APP
-    curl -X GET http://0.0.0.0:9200
-    curl -X GET http://0.0.0.0:5601
+    #curl -X GET http://0.0.0.0:9200
+    #curl -X GET http://0.0.0.0:5601
 }
 
 firewall_elk_deb() {
