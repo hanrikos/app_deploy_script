@@ -8,8 +8,10 @@ sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
 echo Welcome to the WordPress Docker Local Environment setup widzard
 
-read -p 'Project Name: ' PROJECT_NAME
-read -sp 'DB Password: ' MYSQL_PASS
+#read -p 'Project Name: ' PROJECT_NAME
+#read -sp 'DB Password: ' MYSQL_PASS
+echo $PROJECT_NAME
+echo $MYSQL_PASS
 
 if [[ ${#MYSQL_PASS} -ge 6 && "$MYSQL_PASS" == *[A-Z]* && "$MYSQL_PASS" == *[a-z]* && "$MYSQL_PASS" == *[0-9]* ]]; then
     echo "Password Matches the criteria"
@@ -20,11 +22,11 @@ else
 fi
 
 while [[ "$ENABLE_PHP_MY_ADMIN" != "y" && "$ENABLE_PHP_MY_ADMIN" != "n" ]]; do
-    read -p 'Enable PHPMyAdmin (y/n): ' ENABLE_PHP_MY_ADMIN
+    ENABLE_PHP_MY_ADMIN == "y"
 done
 
 while [[ "$ENABLE_WORDMOVE" != "y" && "$ENABLE_WORDMOVE" != "n" ]]; do
-    read -p 'Enable WordMove (y/n): ' ENABLE_WORDMOVE
+    ENABLE_WORDMOVE == "y"
 done
 
 if [ "$ENABLE_WORDMOVE" == "y" ]; then
@@ -55,7 +57,7 @@ if [ "$ENABLE_PHP_MY_ADMIN" == "y" ]; then
       PMA_HOST: mysql"
 fi
 
-mkdir "$PROJECT_NAME" && cd "$PROJECT_NAME" && touch docker-compose.yml
+sudo mkdir "$PROJECT_NAME" && cd "$PROJECT_NAME" && touch docker-compose.yml
 
 cat > docker-compose.yml <<EOL
 version: "2"
@@ -82,7 +84,7 @@ services:
   $WORDMOVE
 EOL
 
-docker-compose up -d
+sudo docker-compose up -d
 
 if [ "$ENABLE_WORDMOVE" == "y" ]; then
   touch public/movefile.yml
