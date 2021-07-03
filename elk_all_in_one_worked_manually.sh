@@ -7,6 +7,9 @@
 #tested-version  :1.2.0
 #tested-distros  :CentOS 7.4
 
+#become sudo
+echo $pass | sudo -S ls /root
+
 # Checking whether user has enough permission to run this script
 sudo -n true
 if [ $? -ne 0 ]
