@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+echo $pass | su $user –c ‘ls /root’
+
 sudo apt-get install -y apt-transport-https
 sudo apt-get install -y software-properties-common wget
 wget -q -O - https://packages.grafana.com/gpg.key | sudo apt-key add -
