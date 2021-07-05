@@ -15,4 +15,4 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       - targets:
-        - $GRAFANA_IP:3000
+        - GRAFANA_IP:3000
