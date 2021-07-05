@@ -52,3 +52,4 @@ sudo systemctl start prometheus
 # Installation cleanup
 rm prometheus-${VERSION}.linux-amd64.tar.gz
 rm -rf prometheus-${VERSION}.linux-amd64
+rm -rf /tmp/deploy
