@@ -15,7 +15,8 @@ wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.6.3_a
 sudo apt-get install -y adduser libfontconfig
 sudo dpkg -i grafana_4.6.3_amd64.deb
 
-sudo tee /etc/grafana/provisioning/datasources/datasource.yaml /dev/null <<EOF
+#sudo mkdir /etc/grafana/provisioning/datasources
+sudo tee /etc/grafana/provisioning/datasources/datasource.yml > /dev/null <<EOF
 apiVersion: 1
 deleteDatasources:
   - name: Prometheus
@@ -46,7 +47,7 @@ datasources:
 editable: true
 EOF
 
-sudo tee /etc/grafana/provisioning/dashboards/all.yaml /dev/null <<EOF
+sudo tee /etc/grafana/provisioning/dashboards/all.yml > /dev/null <<EOF
 - name: 'default'
   org_id: 1
   folder: ''
