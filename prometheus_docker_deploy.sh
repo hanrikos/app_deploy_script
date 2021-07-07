@@ -3,7 +3,6 @@
 #echo $pass | su $user –c ‘ls /root’
 #echo $pass | sudo -S ls /root
 echo $pass | sudo -S ls /root
-export grafana_ip
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
