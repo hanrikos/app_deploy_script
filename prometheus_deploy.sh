@@ -41,11 +41,31 @@ sudo chown prometheus:prometheus /usr/local/bin/promtool
 sudo git clone https://github.com/hanrikos/app_deploy_script.git /tmp/deploy
 
 # Populate configuration files
-cat /tmp/deploy/prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.yml
+#cat /tmp/deploy/prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.yml
 cat /tmp/deploy/prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
 cat /tmp/deploy/prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
 
-'sudo sed -i "s/\\bgrafana_ip_in_yml\\b/$GRAFANA_IP/g" /etc/prometheus/prometheus.yml'
+# 'sudo sed -i "s/\\bgrafana_ip_in_yml\\b/$GRAFANA_IP/g" /etc/prometheus/prometheus.yml'
+sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
+global:
+  scrape_interval: 15s
+
+rule_files:
+  - 'prometheus.rules.yml'
+
+scrape_configs:
+
+  - job_name: 'prometheus'
+    scrape_interval: 5s
+    static_configs:
+      - targets: ['0.0.0.0:9090']
+
+  - job_name: 'grafana'
+    scrape_interval: 5s
+    static_configs:
+      - targets:
+        - $GRAFANA_IP:3000
+EOF
 
 # systemd
 sudo systemctl daemon-reload
