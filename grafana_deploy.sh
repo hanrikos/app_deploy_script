@@ -7,8 +7,10 @@ echo $pass | sudo -S ls /root
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
+sudo mkdir /etc/grafana/provisioning
 sudo mkdir /etc/grafana/provisioning/datasources
 sudo mkdir /etc/grafana/provisioning/dashboards
+sudo mkdir /var/lib/grafana/
 sudo mkdir /var/lib/grafana/dashboards/
 
 sudo touch /etc/grafana/provisioning/datasources/datasource.yml
