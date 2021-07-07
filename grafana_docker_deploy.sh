@@ -370,6 +370,8 @@ sudo tee /tmp/all.yml > /dev/null <<"EOF"
     folder: '/var/lib/grafana/dashboards'
 EOF
 
+sudo systemctl daemon-reload
+
 sudo systemctl restart docker.service
 sudo docker pull grafana/grafana
 sudo docker run -d -p 3000:3000 \
