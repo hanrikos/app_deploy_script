@@ -55,7 +55,7 @@ sudo tee /etc/grafana/provisioning/dashboards/all.yaml /dev/null <<EOF
     folder: '/var/lib/grafana/dashboards'
 EOF
 
-sudo tee /tmp/grafana_dashboad.json /dev/null <<EOF
+sudo tee /var/lib/grafana/dashboards/grafana_dashboad.json /dev/null <<EOF
 {
   "annotations": {
     "list": [
