@@ -38,12 +38,42 @@ sudo chown prometheus:prometheus /usr/local/bin/prometheus
 sudo chown prometheus:prometheus /usr/local/bin/promtool
 
 # Get yaml files externally
-sudo git clone https://github.com/hanrikos/app_deploy_script.git /tmp/deploy
+#sudo git clone https://github.com/hanrikos/app_deploy_script.git /tmp/deploy
 
 # Populate configuration files
 #cat /tmp/deploy/prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.yml
-cat /tmp/deploy/prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
-cat /tmp/deploy/prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
+#cat /tmp/deploy/prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
+#cat /tmp/deploy/prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
+
+sudo tee sudo tee /etc/prometheus/prometheus.rules.yml > /dev/null <<EOF
+groups:
+  - name: example_alert
+    rules:
+      - alert: InstanceDown
+        expr: up == 0
+        for: 5m
+        labels:
+          severity: page
+        annotations:
+          summary: "Instance {{ $labels.instance }} down"
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+EOF
+
+sudo tee /etc/systemd/system/prometheus.service > /dev/null <<EOF
+[Unit]
+Description=Prometheus
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=prometheus
+Group=prometheus
+Type=simple
+ExecStart=/usr/local/bin/prometheus --config.file /etc/prometheus/prometheus.yml --storage.tsdb.path /var/lib/prometheus/ --web.console.templates=/etc/prometheus/consoles --web.console.libraries=/etc/prometheus/console_libraries
+
+[Install]
+WantedBy=multi-user.target
+EOF
 
 # 'sudo sed -i "s/\\bgrafana_ip_in_yml\\b/$GRAFANA_IP/g" /etc/prometheus/prometheus.yml'
 sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
