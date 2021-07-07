@@ -7,6 +7,8 @@ echo $pass | sudo -S ls /root
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
+sudo systemctl stop grafana-server
+sudo systemctl disable grafana-server
 
 sudo tee /tmp/datasource.yml > /dev/null <<"EOF"
 apiVersion: 1
