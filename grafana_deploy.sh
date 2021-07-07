@@ -7,6 +7,13 @@ echo $pass | sudo -S ls /root
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
+sudo mkdir /etc/grafana/provisioning/datasources
+sudo mkdir /etc/grafana/provisioning/dashboards
+sudo mkdir /var/lib/grafana/dashboards/
+
+sudo touch /etc/grafana/provisioning/datasources/datasource.yml
+sudo touch /etc/grafana/provisioning/dashboards/all.yml
+sudo touch /var/lib/grafana/dashboards/grafana_dashboad.json
 
 # Download grafana
 wget https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana_4.6.3_amd64.deb
