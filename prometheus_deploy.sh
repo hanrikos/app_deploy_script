@@ -45,6 +45,8 @@ cat /tmp/deploy/prometheus/prometheus.yml | sudo tee /etc/prometheus/prometheus.
 cat /tmp/deploy/prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
 cat /tmp/deploy/prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
 
+'sudo sed -i "s/\\bgrafana_ip_in_yml\\b/$GRAFANA_IP/g" /etc/prometheus/prometheus.yml'
+
 # systemd
 sudo systemctl daemon-reload
 sudo systemctl enable prometheus
