@@ -20,7 +20,7 @@ datasources:
   type: prometheus
   access: proxy
   orgId: 1
-  url: $PROMETHEUS_IP:9090
+  url: $PROMETHEUS_IP:9089
   password:
   user:
   database:
@@ -376,7 +376,7 @@ sudo systemctl daemon-reload
 
 sudo systemctl restart docker.service
 sudo docker pull grafana/grafana
-sudo docker run -d -p 3000:3000 \
+sudo docker run -d -p 2999:3000 \
             --name=grafana \
             -v /tmp/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yaml \
             -v /tmp/all.yml:/etc/grafana/provisioning/dashboards/all.yml \
