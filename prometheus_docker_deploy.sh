@@ -6,6 +6,9 @@ echo $pass | sudo -S ls /root
 
 sudo sed -i "/127.0.0.1/ s/.*/0.0.0.0\tlocalhost/g" /etc/hosts
 
+sudo systemctl disable prometheus
+sudo systemctl stop prometheus
+
 sudo tee /tmp/prometheus.yml > /dev/null <<"EOF"
 global:
   scrape_interval: 15s
