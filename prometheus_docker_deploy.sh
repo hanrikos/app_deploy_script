@@ -18,12 +18,12 @@ scrape_configs:
   - job_name: 'prometheus'
     scrape_interval: 5s
     static_configs:
-      - targets: ['0.0.0.0:9090']
+      - targets: ['localhost:9090']
   - job_name: 'grafana'
     scrape_interval: 5s
     static_configs:
       - targets:
-        - $GRAFANA_IP:3000
+        - $GRAFANA_IP:2999
 EOF
 
 # systemd
@@ -31,4 +31,4 @@ sudo systemctl daemon-reload
 
 sudo systemctl restart docker.service
 sudo docker pull prom/prometheus
-sudo docker run -p 9090:9090 -v /tmp/prometheus.yml:/etc/prometheus/prometheus.yml --restart=always prom/prometheus
+sudo docker run -p 9089:9090 -v /tmp/prometheus.yml:/etc/prometheus/prometheus.yml --restart=always prom/prometheus
