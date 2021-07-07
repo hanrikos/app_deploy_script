@@ -45,7 +45,7 @@ sudo chown prometheus:prometheus /usr/local/bin/promtool
 #cat /tmp/deploy/prometheus/prometheus.rules.yml | sudo tee /etc/prometheus/prometheus.rules.yml
 #cat /tmp/deploy/prometheus/prometheus.service | sudo tee /etc/systemd/system/prometheus.service
 
-sudo tee sudo tee /etc/prometheus/prometheus.rules.yml > /dev/null <<EOF
+sudo tee /etc/prometheus/prometheus.rules.yml > /dev/null <<EOF
 groups:
   - name: example_alert
     rules:
