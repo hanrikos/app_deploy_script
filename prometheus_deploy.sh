@@ -131,5 +131,5 @@ elif [ $SCRIPT_MODE = "config_only" ]; then
   sudo systemctl daemon-reload
   sudo systemctl restart prometheus
 else
-  echo "try again"
+  echo "no parameters were entered, try again"
 fi
