@@ -93,7 +93,7 @@ EOF
       scrape_interval: 5s
       static_configs:
         - targets:
-          - $GRAFANA_IP:3000
+          - $OLD_GRAFANA_IP:3000
 EOF
 
   # systemd
