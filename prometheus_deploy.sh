@@ -1,5 +1,5 @@
 #!/bin/bash
-if [ 'full' = $SCRIPT_MODE ]; then
+if ! [[ $GRAFANA_IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
   #echo $pass | su $user –c ‘ls /root’
   #echo $pass | sudo -S ls /root
   echo $pass | sudo -S ls /root
@@ -106,7 +106,7 @@ EOF
   rm -rf prometheus-${VERSION}.linux-amd64
   # sudo rm -rf /tmp/deploy
 
-elif [ 'config_only' = $SCRIPT_MODE ]; then
+elif [[ $GRAFANA_IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
   sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
   global:
     scrape_interval: 15s
