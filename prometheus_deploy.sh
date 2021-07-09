@@ -56,7 +56,7 @@ if [ $SCRIPT_MODE = "full" ]; then
           annotations:
             summary: "Instance {{ $labels.instance }} down"
             description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
-  EOF
+EOF
 
   sudo tee /etc/systemd/system/prometheus.service > /dev/null <<EOF
   [Unit]
@@ -72,7 +72,7 @@ if [ $SCRIPT_MODE = "full" ]; then
 
   [Install]
   WantedBy=multi-user.target
-  EOF
+EOF
 
   # 'sudo sed -i "s/\\bgrafana_ip_in_yml\\b/$GRAFANA_IP/g" /etc/prometheus/prometheus.yml'
   sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
@@ -94,7 +94,7 @@ if [ $SCRIPT_MODE = "full" ]; then
       static_configs:
         - targets:
           - $GRAFANA_IP:3000
-  EOF
+EOF
 
   # systemd
   sudo systemctl daemon-reload
@@ -126,7 +126,7 @@ elif [ $SCRIPT_MODE = "config_only" ]; then
       static_configs:
         - targets:
           - $GRAFANA_IP:3000
-  EOF
+EOF
     # systemd
   sudo systemctl daemon-reload
   sudo systemctl restart prometheus
