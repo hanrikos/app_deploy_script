@@ -105,7 +105,7 @@ if [ $SCRIPT_MODE = "full" ]; then
   rm prometheus-${VERSION}.linux-amd64.tar.gz
   rm -rf prometheus-${VERSION}.linux-amd64
   # sudo rm -rf /tmp/deploy
-SCRIPT_MODE
+
 if [ $SCRIPT_MODE = "config_only" ]; then
   sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
   global:
