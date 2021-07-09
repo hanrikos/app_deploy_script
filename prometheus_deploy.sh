@@ -105,8 +105,9 @@ EOF
   rm prometheus-${VERSION}.linux-amd64.tar.gz
   rm -rf prometheus-${VERSION}.linux-amd64
   # sudo rm -rf /tmp/deploy
+fi
 
-elif [[ $GRAFANA_IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+if [[ $GRAFANA_IP =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
   sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
   global:
     scrape_interval: 15s
@@ -130,6 +131,4 @@ EOF
     # systemd
   sudo systemctl daemon-reload
   sudo systemctl restart prometheus
-else
-  echo "no parameters were entered, try again"
 fi
