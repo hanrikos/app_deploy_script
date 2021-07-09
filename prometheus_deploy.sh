@@ -75,26 +75,26 @@ EOF
 EOF
 
   # 'sudo sed -i "s/\\bgrafana_ip_in_yml\\b/$GRAFANA_IP/g" /etc/prometheus/prometheus.yml'
-  sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
-  global:
-    scrape_interval: 15s
-
-  rule_files:
-    - 'prometheus.rules.yml'
-
-  scrape_configs:
-
-    - job_name: 'prometheus'
-      scrape_interval: 5s
-      static_configs:
-        - targets: ['0.0.0.0:9090']
-
-    - job_name: 'grafana'
-      scrape_interval: 5s
-      static_configs:
-        - targets:
-          - $OLD_GRAFANA_IP:3000
-EOF
+#  sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF
+#  global:
+#    scrape_interval: 15s
+#
+#  rule_files:
+#    - 'prometheus.rules.yml'
+#
+#  scrape_configs:
+#
+#    - job_name: 'prometheus'
+#      scrape_interval: 5s
+#      static_configs:
+#        - targets: ['0.0.0.0:9090']
+#
+#    - job_name: 'grafana'
+#      scrape_interval: 5s
+#      static_configs:
+#        - targets:
+#          - $OLD_GRAFANA_IP:3000
+#EOF
 
   # systemd
   sudo systemctl daemon-reload
